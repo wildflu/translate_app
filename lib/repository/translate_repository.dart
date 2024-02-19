@@ -12,7 +12,6 @@ class Translate {
   final String url =  'https://text-translator2.p.rapidapi.com/translate';
 
   Future<String> translateText(String text, String sourceLang, String targetLang) async {
-    print('----------start ----------------');
     final Map<String, String> requestBody = {
       'source_language': sourceLang,
       'target_language': targetLang,
