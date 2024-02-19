@@ -39,6 +39,7 @@ dependencies:
   http: ^1.2.0
   gap: ^3.0.1
   im_stepper: ^1.0.1+1
+  chat_bubbles: ^1.6.0
 
 dev_dependencies:
   flutter_test:

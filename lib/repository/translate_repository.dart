@@ -11,11 +11,12 @@ class Translate {
   final String apiKey = Consts.apiKey;
   final String url =  'https://text-translator2.p.rapidapi.com/translate';
 
-  Future<String> translateText(String text) async {    
+  Future<String> translateText(String text, String sourceLang, String targetLang) async {
+    print('----------start ----------------');
     final Map<String, String> requestBody = {
-      'source_language': 'en',
-      'target_language': 'id',
-      'text': 'What is your name?',
+      'source_language': sourceLang,
+      'target_language': targetLang,
+      'text': text,
     };
 
     final Uri uri = Uri.parse(url);
@@ -38,33 +39,34 @@ class Translate {
     }
   }
 
-  Future<List<String>> getLanges()async {
-    await Future.delayed(const Duration(seconds: 2));
-    return ['ar','fr','en','er','rt','em','gt','ht','en','er','rt','em'];
-  }
 
-  Future<void> fetchLanguages() async {
-    final Uri uri = Uri.parse('$url/getLanguages');
+  Future<String> fetchLanguages() async {
+    final String key = apiKey;
+    final Uri url = Uri.parse('https://text-translator2.p.rapidapi.com/getLanguages');
     final Map<String, String> headers = {
-      'X-RapidAPI-Key': apiKey,
+      'X-RapidAPI-Key': key,
       'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com',
     };
-
     try {
-      final response = await http.get(uri, headers: headers);
-
+      final response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
-        print(response.body);
+        return response.body;
       } else {
         print('Request failed with status: ${response.statusCode}');
+        return 'error';
       }
     } catch (error) {
       print('Error: $error');
+      return 'error';
     }
   }
 }
-// const axios = require('axios');
 
+
+
+
+
+// const axios = require('axios');
 // const options = {
 //   method: 'GET',
 //   url: 'https://text-translator2.p.rapidapi.com/getLanguages',

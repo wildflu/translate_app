@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:translateapp/model/message.dart';
@@ -15,8 +17,9 @@ class TranslateController extends GetxController {
   List<String> translateLangs = [];
 
   translateToMe() async {
+    if (message.text == '') return ;
     addQuestionOrWordToConvertation(message.text, true);
-    final String repond = await translateRepositoy.translateText(message.text);
+    final String repond = await translateRepositoy.translateText(message.text, resourceLang, targetLang);
     addQuestionOrWordToConvertation(repond, false);
     message.clear();
   }
@@ -27,7 +30,7 @@ class TranslateController extends GetxController {
   }
 
   getDispayTranslateLangs() async {
-    List<String> langs = await translateRepositoy.getLanges();
+    List<String> langs = extractCodes(await translateRepositoy.fetchLanguages());
     translateLangs = langs;
     update();
   }
@@ -46,5 +49,21 @@ class TranslateController extends GetxController {
   void onInit() {
     super.onInit();
     getDispayTranslateLangs();
+  }
+
+  List<String> extractCodes(String jsonResponse) {
+    List<String> codes = [];
+    
+    // Parse JSON response
+    Map<String, dynamic> responseData = jsonDecode(jsonResponse);
+
+    // Extract languages array
+    List<dynamic> languagesData = responseData['data']['languages'];
+
+    // Iterate over language objects and extract codes
+    languagesData.forEach((language) {
+      codes.add(language['code']);
+    });
+    return codes;
   }
 }

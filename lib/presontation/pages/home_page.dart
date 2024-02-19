@@ -1,6 +1,7 @@
 
 
 
+import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:im_stepper/stepper.dart';
@@ -23,11 +24,17 @@ class HomPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     bool isquestion = controller.translateConvertation[index].isQuestion;
                     return Align(
-                      alignment: isquestion? Alignment.topRight : Alignment.topLeft,
-                      child: Text(
-                        controller.translateConvertation[index].text, 
-                        style: TextStyle(color: isquestion ? Colors.red:Colors.blue),
-                      )
+
+                      child: BubbleSpecialThree(
+                        text: controller.translateConvertation[index].text,
+                        color: isquestion ? Color(0xFF54B2F9) :const Color(0xFFE8E8EE),
+                        tail: false,
+                        isSender: isquestion,
+                        textStyle: TextStyle(
+                            color: isquestion ? Colors.white: Colors.black,
+                            fontSize: 16
+                        ),  
+                      ),
                     );
                   },
                 ),
@@ -60,7 +67,7 @@ class HomPage extends StatelessWidget {
                                 borderSide: BorderSide.none
                               ),
                               contentPadding: const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
-                              suffixIcon: IconButton(onPressed: (){}, icon: const Icon(Icons.send))
+                              suffixIcon: IconButton(onPressed: ()=> controller.translateToMe(), icon: const Icon(Icons.send))
                             ),
                           )),
                           const Gap(5),
@@ -70,7 +77,7 @@ class HomPage extends StatelessWidget {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
                             ),
                             onPressed: (){
-                            controller.translateToMe();
+
                           }, icon: const Icon(Icons.mic))),
                           const Gap(5),
                           Expanded(flex:1,child: IconButton(
@@ -79,7 +86,7 @@ class HomPage extends StatelessWidget {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
                             ),
                             onPressed: (){
-                            controller.translateToMe();
+                              
                           }, icon: const Icon(Icons.image))),
                         ],
                       ),
