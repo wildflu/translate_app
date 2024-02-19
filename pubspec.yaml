@@ -41,6 +41,7 @@ dependencies:
   im_stepper: ^1.0.1+1
   chat_bubbles: ^1.6.0
   speech_to_text: ^6.6.0
+  simple_ripple_animation: ^0.0.9
 
 dev_dependencies:
   flutter_test:

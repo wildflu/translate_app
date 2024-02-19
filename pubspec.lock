@@ -120,6 +120,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  hyper_lint:
+    dependency: transitive
+    description:
+      name: hyper_lint
+      sha256: "6d214b6e6e38d15f087ed9b67d461d026c9cdebb64c7a46cf1fb80350e536d33"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   im_stepper:
     dependency: "direct main"
     description:
@@ -208,6 +216,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  simple_ripple_animation:
+    dependency: "direct main"
+    description:
+      name: simple_ripple_animation
+      sha256: d654c4a4a4a61ec8cf52b7b06dcf1bcb311c98e0a1a98534c6355aca2a73b6fd
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   sky_engine:
     dependency: transitive
     description: flutter

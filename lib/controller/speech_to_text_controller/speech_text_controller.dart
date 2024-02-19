@@ -16,7 +16,13 @@ class SpeechToTextController extends GetxController{
   void listen() async {
     if (!isListening) {
       bool available = await speech.initialize(
-        onStatus: (status) => print('onStatus: $status'),
+        onStatus: (status){
+          if(status == 'done') {
+            isListening = false;
+            update();
+          }
+          print('onStatus: $status');
+        },
         onError: (errorNotification) => print('onError: $errorNotification'),
       );
       if (available) {
@@ -37,69 +43,3 @@ class SpeechToTextController extends GetxController{
   }
 }
 
-
-// class SpeechToTextComponent extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Speech to Text'),
-//       ),
-//       body: Center(
-//         child: SpeechToTextController(),
-//       ),
-//     );
-//   }
-// }
-
-// class SpeechToTextController extends StatefulWidget {
-//   @override
-//   _SpeechToTextControllerState createState() => _SpeechToTextControllerState();
-// }
-
-// class _SpeechToTextControllerState extends State<SpeechToTextController> {
-//   stt.SpeechToText _speech = stt.SpeechToText();
-//   bool _isListening = false;
-//   String _text = '';
-
-  // void _listen() async {
-  //   if (!_isListening) {
-  //     bool available = await _speech.initialize(
-  //       onStatus: (status) => print('onStatus: $status'),
-  //       onError: (errorNotification) => print('onError: $errorNotification'),
-  //     );
-  //     if (available) {
-  //       setState(() {
-  //         _isListening = true;
-  //       });
-  //       _speech.listen(
-  //         onResult: (result) {
-  //           setState(() {
-  //             _text = result.recognizedWords;
-  //           });
-  //         },
-  //       );
-  //     }
-  //   } else {
-  //     setState(() {
-  //       _isListening = false;
-  //       _speech.stop();
-  //     });
-  //   }
-  // }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: <Widget>[
-//         FloatingActionButton(
-//           onPressed: _listen,
-//           child: Icon(_isListening ? Icons.mic : Icons.mic_none),
-//         ),
-//         SizedBox(height: 20.0),
-//         Text(_text),
-//       ],
-//     );
-//   }
-// }
