@@ -1,12 +1,11 @@
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:im_stepper/stepper.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
+import 'package:translateapp/controller/img_text_text_controller/img_to_text_controller.dart';
 import 'package:translateapp/controller/speech_to_text_controller/speech_text_controller.dart';
 import 'package:translateapp/controller/translate_controller/translate_controller.dart';
 import 'package:gap/gap.dart';
-import 'package:translateapp/presontation/components/langs_list_component.dart';
 
 class HomPage extends StatelessWidget {
   const HomPage({super.key});
@@ -112,16 +111,23 @@ class HomPage extends StatelessWidget {
                           },
                         ),
                         const Gap(5),
-                        Expanded(
-                            flex: 1,
-                            child: IconButton(
-                                style: IconButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30))),
-                                onPressed: () {},
-                                icon: const Icon(Icons.image))),
+                        GetBuilder<TextFromImage>(
+                          init: TextFromImage(),
+                          builder: (textFromImgcontroller) {
+                            return Expanded(
+                              flex: 1,
+                              child: IconButton(
+                                  style: IconButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30))),
+                                  onPressed: ()=> textFromImgcontroller.getImage(true),
+                                  icon: const Icon(Icons.image)
+                                )
+                            );
+                          },
+                        )
                       ],
                     ),
                   ),
