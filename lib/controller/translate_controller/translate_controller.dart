@@ -4,35 +4,37 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:translateapp/constants/data.dart';
-import 'package:translateapp/model/message.dart';
+import 'package:translateapp/controller/sql_controller/db_controller.dart';
 import 'package:translateapp/repository/translate_repository.dart';
 
 class TranslateController extends GetxController {
 
-
-
+  DBController dbController = Get.put(DBController());
 
   String resourceLang = 'en';
   String targetLang = 'ar';
   TextEditingController message = TextEditingController();
 
   final Translate translateRepositoy = Translate();
-  RxList<Message> translateConvertation = <Message>[].obs;
   List<String> translateLangs = [];
+
+  navigateToConvertation(int id) {
+    dbController.navigateToOldConvertation(id);
+    update();
+  }
 
   translateToMe() async {
     if (message.text == '') return ;
-    addQuestionOrWordToConvertation(message.text, true);
+
+    await dbController.translateMassage(message.text, 0);
+    update();
     final String repond = await translateRepositoy.translateText(message.text, resourceLang, targetLang);
-    addQuestionOrWordToConvertation(repond, false);
+    await dbController.translateMassage(repond, 1);
+    
     message.clear();
+    update();
   }
 
-  bool addQuestionOrWordToConvertation(String text, bool isQues){
-    translateConvertation.add(Message(text: text, isQuestion: isQues));
-    return true;
-  }
 
   getDispayTranslateLangs() async {
     List<String> langs = extractCodes(await translateRepositoy.fetchLanguages());

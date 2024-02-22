@@ -38,7 +38,6 @@ class LoginPage extends StatelessWidget {
                     Expanded(
                       flex: 5,
                       child: TextFormField(
-                        controller: controller.textController,
                         decoration: InputDecoration(
                           hintText: 'yourMassege',
                           border: OutlineInputBorder(
@@ -49,7 +48,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                     IconButton(onPressed: ()async{
-                        await controller.translateMassage();
+                        // await controller.translateMassage();
                       }, 
                       icon: Icon(Icons.send)
                     )

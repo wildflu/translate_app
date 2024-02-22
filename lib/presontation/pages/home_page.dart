@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 import 'package:translateapp/controller/img_text_text_controller/img_to_text_controller.dart';
 import 'package:translateapp/controller/speech_to_text_controller/speech_text_controller.dart';
+import 'package:translateapp/controller/sql_controller/db_controller.dart';
 import 'package:translateapp/controller/translate_controller/translate_controller.dart';
 import 'package:gap/gap.dart';
 import 'package:translateapp/presontation/components/app_drawer.dart';
@@ -40,10 +41,11 @@ class HomePageMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TranslateController controller = Get.put(TranslateController());
     return Scaffold(
-      body: Obx(() {
-        return Container(
+      body: GetBuilder<TranslateController>(
+        init: TranslateController(),
+        builder: (controller) {
+          return Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -60,13 +62,12 @@ class HomePageMain extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        itemCount: controller.translateConvertation.length,
+                        itemCount: controller.dbController.convertationMasseges.length,
                         itemBuilder: (context, index) {
-                          bool isquestion =
-                              controller.translateConvertation[index].isQuestion;
+                          bool isquestion = controller.dbController.convertationMasseges[index]['sender_id'] == 0;
                           return Align(
                             child: BubbleSpecialThree(
-                              text: controller.translateConvertation[index].text,
+                              text: controller.dbController.convertationMasseges[index]['text'],
                               color: isquestion
                                   ? const Color(0xFF54B2F9)
                                   : const Color(0xFFE8E8EE),
@@ -98,6 +99,7 @@ class HomePageMain extends StatelessWidget {
                                       controller: controller.message,
                                           minLines: null,
                                           maxLines: null,
+                                          textInputAction: TextInputAction.done,
                                       decoration: InputDecoration(
                                           filled: true,
                                           fillColor: Colors.white,
@@ -192,16 +194,19 @@ class HomePageMain extends StatelessWidget {
                   children: [
                     IconButton(onPressed: (){
                       zoomController.toggle!();
-                    }, icon: const Icon(Icons.menu), color: Color(0xFF54B2F9),),
-                    Expanded(child: const Text("ConvLate", style: TextStyle(fontSize: 18, color: Color(0xFF54B2F9)),)),
-                    IconButton(onPressed: (){}, icon: Icon(Icons.new_releases_outlined), color: Color(0xFF54B2F9),)
+                    }, icon: const Icon(Icons.menu), color: const Color(0xFF54B2F9),),
+                    const Expanded(child: Text("ConvLate", style: TextStyle(fontSize: 18, color: Color(0xFF54B2F9)),)),
+                    IconButton(onPressed: (){
+                      
+                    }, icon: const Icon(Icons.new_releases_outlined), color: const Color(0xFF54B2F9),)
                   ],
                 ),
               ),
             ],
           ),
         );
-      }),
+        },
+      ),
     );
   }
 }

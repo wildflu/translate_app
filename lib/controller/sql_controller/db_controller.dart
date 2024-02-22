@@ -1,17 +1,15 @@
 
 
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:translateapp/constants/data.dart';
+import 'package:translateapp/repository/translate_repository.dart';
 
 class DBController extends GetxController {
-  int ?converId;
 
+  int ?converId;
+  final Translate translateRepositoy = Translate();
   List<Map<String, dynamic>> convers = [] ;
   final DatabaseHelper db = DatabaseHelper();
-  TextEditingController textController = TextEditingController();
   List<Map<String, dynamic>> convertationMasseges = [];
 
   navigateToOldConvertation(int id) {
@@ -30,21 +28,19 @@ class DBController extends GetxController {
     update();
   }
 
-  createConvertation()async {
-    int convertationId = await db.insertConversation(textController.text.substring(0,5), DateTime.now().millisecondsSinceEpoch);
+  createConvertation(String ms)async {
+    int convertationId = await db.insertConversation(ms, DateTime.now().millisecondsSinceEpoch);
     converId = convertationId;
     update();
   }
 
-  translateMassage()async {
+  translateMassage(String message,isQuestion)async {
     if(converId == null){
-      await createConvertation();
+      await createConvertation(message);
     }
-    await db.insertMessage(converId!, 0, textController.text);
-    await db.insertMessage(converId!, 1, '${textController.text} this is the repond');
+    db.insertMessage(converId!, isQuestion, message);
     await getAllData();
     getAchatMessages(converId!);
-    textController.clear();
     update();
   }
 
