@@ -10,6 +10,7 @@ import 'package:translateapp/repository/translate_repository.dart';
 class TranslateController extends GetxController {
 
   DBController dbController = Get.put(DBController());
+  bool isInLoad = false;
 
   String resourceLang = 'en';
   String targetLang = 'ar';
@@ -25,12 +26,12 @@ class TranslateController extends GetxController {
 
   translateToMe() async {
     if (message.text == '') return ;
-
-    await dbController.translateMassage(message.text, 0);
+    isInLoad = true;
     update();
+    await dbController.translateMassage(message.text, 0);
     final String repond = await translateRepositoy.translateText(message.text, resourceLang, targetLang);
     await dbController.translateMassage(repond, 1);
-    
+    isInLoad = false;
     message.clear();
     update();
   }

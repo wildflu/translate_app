@@ -10,6 +10,7 @@ import 'package:translateapp/controller/sql_controller/db_controller.dart';
 import 'package:translateapp/controller/translate_controller/translate_controller.dart';
 import 'package:gap/gap.dart';
 import 'package:translateapp/presontation/components/app_drawer.dart';
+import 'package:translateapp/presontation/components/loading_component.dart';
 
 
 
@@ -197,11 +198,24 @@ class HomePageMain extends StatelessWidget {
                     }, icon: const Icon(Icons.menu), color: const Color(0xFF54B2F9),),
                     const Expanded(child: Text("ConvLate", style: TextStyle(fontSize: 18, color: Color(0xFF54B2F9)),)),
                     IconButton(onPressed: (){
-                      
+                      Get.reload();
                     }, icon: const Icon(Icons.new_releases_outlined), color: const Color(0xFF54B2F9),)
                   ],
                 ),
               ),
+              controller.isInLoad
+              ? Positioned(
+                top: 200,
+                right: 20,
+                left: 20,
+                child: Container(
+                  height: 30,
+                  decoration: const BoxDecoration(
+                  ),
+                  child: const LoadingComponent(),
+                ),
+              )
+              : const SizedBox()
             ],
           ),
         );

@@ -15,15 +15,13 @@ class DBController extends GetxController {
   navigateToOldConvertation(int id) {
     getAchatMessages(id);
     converId = id;
-    update();
   }
 
   getAllData() async {
     convers = await db.getConversations();
-    update();
   }
 
-  void getAchatMessages(int idConvertation)async{
+  void getAchatMessages(int idConvertation) async {
     convertationMasseges = await db.getMessages(idConvertation);
     update();
   }
@@ -38,8 +36,7 @@ class DBController extends GetxController {
     if(converId == null){
       await createConvertation(message);
     }
-    db.insertMessage(converId!, isQuestion, message);
-    await getAllData();
+    await db.insertMessage(converId!, isQuestion, message);
     getAchatMessages(converId!);
     update();
   }

@@ -46,6 +46,7 @@ dependencies:
   google_ml_kit: ^0.16.3
   flutter_zoom_drawer: ^3.1.2
   sqflite: ^2.3.2
+  loading_indicator: ^3.1.1
 
 dev_dependencies:
   flutter_test:
