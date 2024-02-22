@@ -4,6 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:translateapp/controller/translate_controller/translate_controller.dart';
 
+
+
 class LangsListComponent extends StatelessWidget {
   const LangsListComponent({super.key, required this.label});
   final String label;
@@ -16,7 +18,9 @@ class LangsListComponent extends StatelessWidget {
           height: 30,
           child: Row(
             children: [
-              Text(label),
+              SizedBox(
+                width: 40,
+                child: Text(label,  style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400),)),
               const Gap(10),
               Expanded(
                 child: ListView.builder(
@@ -29,7 +33,8 @@ class LangsListComponent extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(width: 1, color: controller.translateLangs[index] == (label == 'From'? controller.resourceLang: controller.targetLang) ? Colors.blue : Colors.black)
+                        color: controller.translateLangs[index] == (label == 'From'? controller.resourceLang: controller.targetLang) ? Colors.white : const Color(0xFF37CEFF),
+                        border: Border.all(width: 1, color: controller.translateLangs[index] == (label == 'From'? controller.resourceLang: controller.targetLang) ? Colors.white     : Colors.white)
                       ),
                       child: InkWell(
                         onTap: (){
@@ -43,7 +48,7 @@ class LangsListComponent extends StatelessWidget {
                           child: Text(
                             controller.translateLangs[index], 
                             style: TextStyle(
-                              color: controller.translateLangs[index] == (label == 'From'? controller.resourceLang: controller.targetLang) ? Colors.blue : Colors.black,
+                              color: controller.translateLangs[index] == (label == 'From'? controller.resourceLang: controller.targetLang) ? Colors.blue : Colors.white,
                               fontSize: 15, 
                               fontWeight: FontWeight.w300
                             ),

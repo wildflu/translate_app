@@ -4,10 +4,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:translateapp/constants/data.dart';
 import 'package:translateapp/model/message.dart';
 import 'package:translateapp/repository/translate_repository.dart';
 
 class TranslateController extends GetxController {
+
+
+
+
   String resourceLang = 'en';
   String targetLang = 'ar';
   TextEditingController message = TextEditingController();
@@ -54,13 +59,10 @@ class TranslateController extends GetxController {
   List<String> extractCodes(String jsonResponse) {
     List<String> codes = [];
     
-    // Parse JSON response
     Map<String, dynamic> responseData = jsonDecode(jsonResponse);
 
-    // Extract languages array
     List<dynamic> languagesData = responseData['data']['languages'];
 
-    // Iterate over language objects and extract codes
     languagesData.forEach((language) {
       codes.add(language['code']);
     });
