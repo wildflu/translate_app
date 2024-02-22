@@ -19,8 +19,13 @@ class TranslateController extends GetxController {
   final Translate translateRepositoy = Translate();
   List<String> translateLangs = [];
 
-  navigateToConvertation(int id) {
-    dbController.navigateToOldConvertation(id);
+  startNewChat() {
+    dbController.createConvertation('new translate chat');
+    update();
+  }
+
+  navigateToConvertation(int id)async {
+    await dbController.navigateToOldConvertation(id);
     update();
   }
 

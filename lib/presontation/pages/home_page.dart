@@ -198,7 +198,7 @@ class HomePageMain extends StatelessWidget {
                     }, icon: const Icon(Icons.menu), color: const Color(0xFF54B2F9),),
                     const Expanded(child: Text("ConvLate", style: TextStyle(fontSize: 18, color: Color(0xFF54B2F9)),)),
                     IconButton(onPressed: (){
-                      Get.reload();
+                      controller.startNewChat();
                     }, icon: const Icon(Icons.new_releases_outlined), color: const Color(0xFF54B2F9),)
                   ],
                 ),

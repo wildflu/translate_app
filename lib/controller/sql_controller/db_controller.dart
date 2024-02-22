@@ -12,18 +12,20 @@ class DBController extends GetxController {
   final DatabaseHelper db = DatabaseHelper();
   List<Map<String, dynamic>> convertationMasseges = [];
 
-  navigateToOldConvertation(int id) {
-    getAchatMessages(id);
+  navigateToOldConvertation(int id) async{
+    await getAchatMessages(id);
     converId = id;
+    update();
   }
 
   getAllData() async {
     convers = await db.getConversations();
   }
 
-  void getAchatMessages(int idConvertation) async {
+  Future<bool> getAchatMessages(int idConvertation) async {
     convertationMasseges = await db.getMessages(idConvertation);
     update();
+    return true;
   }
 
   createConvertation(String ms)async {
@@ -37,7 +39,7 @@ class DBController extends GetxController {
       await createConvertation(message);
     }
     await db.insertMessage(converId!, isQuestion, message);
-    getAchatMessages(converId!);
+    await getAchatMessages(converId!);
     update();
   }
 

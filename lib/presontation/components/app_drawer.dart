@@ -2,10 +2,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:translateapp/controller/sql_controller/db_controller.dart';
 import 'package:translateapp/controller/translate_controller/translate_controller.dart';
 import 'package:translateapp/presontation/components/langs_list_component.dart';
 import 'package:translateapp/presontation/pages/home_page.dart';
@@ -23,13 +21,23 @@ class AppDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const DrawerHeader(
+            DrawerHeader(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(radius: 50,),
-                  Gap(10),
-                  Text("walidcode0@gmail.com", style: TextStyle(fontSize: 15, color: Colors.white),)
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(3),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.asset('assets/profile.jpg'),
+                      ),
+                    ),
+                  ),
+                  const Gap(10),
+                  const Text("walidcode0@gmail.com", style: TextStyle(fontSize: 15, color: Colors.white),)
                 ],
               ),
             ),
